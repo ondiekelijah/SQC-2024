@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:consumer": "jest",
+    "test": "jest",
     "pact:publish": "pact-broker publish ./tests/pacts --consumer-app-version=\"1.0.0\" --auto-detect-version-properties"
   },
   "dependencies": {
