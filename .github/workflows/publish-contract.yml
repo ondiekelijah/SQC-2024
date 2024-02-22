@@ -25,9 +25,9 @@ jobs:
         with:
           node-version: '16.x'
       - name: Install Dependencies
-        run: cd users_frontend && npm ci
+        run: cd consumer && npm ci
       - name: Run Tests
-        run: cd users_frontend && npm test
+        run: cd consumer && npm test
 
   publish-pact-files:
     needs: consumer-tests
@@ -37,7 +37,7 @@ jobs:
       - name: Publish Pact Files
         uses: pactflow/actions/publish-pact-files@v1.0.1
         env:
-          pactfiles: users_frontend/tests/pacts
+          pactfiles: consumer/tests/pacts
           application_name: "usersInteractionsConsumer"
 
   provider-tests:
@@ -50,9 +50,9 @@ jobs:
         with:
           node-version: '16.x'
       - name: Install Dependencies
-        run: cd users_api && npm ci
+        run: cd provider && npm ci
       - name: Run Provider Verification
-        run: cd users_api && npm test
+        run: cd provider && npm test
 
   pact-create-tag:
     needs: provider-tests
