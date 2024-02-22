@@ -124,7 +124,7 @@ describe("Pact Verification", () => {
       pactBrokerUrl: process.env.PACT_BROKER_BASE_URL,
       pactBrokerToken: process.env.PACT_BROKER_TOKEN,
       publishVerificationResult: true,
-      providerVersion: process.env.MY_CI_COMMIT,
+      providerVersion: process.env.MY_GIT_SHA,
       providerVersionBranch: "main",
       providerVersionTags: [process.env.MY_CI_BRANCH],
 
