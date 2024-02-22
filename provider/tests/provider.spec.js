@@ -1,6 +1,5 @@
 const { Verifier } = require("@pact-foundation/pact");
 const path = require("path");
-const dotenv = require("dotenv");
 const { loadData, app } = require("../provider");
 
 dotenv.config();
