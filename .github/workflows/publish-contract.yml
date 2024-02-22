@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: '16.x'
       - name: Install Dependencies
-        run: cd consumer && npm ci
+        run: cd consumer && npm install
       - name: Run Tests
         run: cd consumer && npm test
 
@@ -50,7 +50,7 @@ jobs:
         with:
           node-version: '16.x'
       - name: Install Dependencies
-        run: cd provider && npm ci
+        run: cd provider && npm install
       - name: Run Provider Verification
         run: cd provider && npm test
 
