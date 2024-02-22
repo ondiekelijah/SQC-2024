@@ -2,8 +2,6 @@ const { Verifier } = require("@pact-foundation/pact");
 const path = require("path");
 const { loadData, app } = require("../provider");
 
-dotenv.config();
-
 // // Set up a server to run the consumer tests against
 const server = app.listen(5000, () => {
   loadData();
