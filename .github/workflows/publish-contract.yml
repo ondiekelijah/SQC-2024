@@ -1,0 +1,66 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  version: ${{ github.sha }} # setting the git sha to version
+  PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
+  PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+  CI: 'true' # setting CI to true
+  MY_CI_COMMIT: ${{ github.sha }} # setting MY_CI_COMMIT to the git sha
+  MY_GIT_SHA: ${{ github.sha }} # setting MY_GIT_SHA to the git sha
+  MY_CI_BRANCH: ${{ github.ref }} # setting MY_CI_BRANCH to the git branch
+
+jobs:
+  consumer-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+      - name: Install Dependencies
+        run: cd users_frontend && npm ci
+      - name: Run Tests
+        run: cd users_frontend && npm test
+
+  publish-pact-files:
+    needs: consumer-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish Pact Files
+        uses: pactflow/actions/publish-pact-files@v1.0.1
+        env:
+          pactfiles: users_frontend/tests/pacts
+          application_name: "usersInteractionsConsumer"
+
+  provider-tests:
+    needs: publish-pact-files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+      - name: Install Dependencies
+        run: cd users_api && npm ci
+      - name: Run Provider Verification
+        run: cd users_api && npm test
+
+  pact-create-tag:
+    needs: provider-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create Tag
+        uses: pactflow/actions/create-version-tag@v1.0.1
+        env:
+          tag: prod-${{ github.sha }} # setting the tag to prod-git sha
+          application_name: "usersInteractionsProvider"
