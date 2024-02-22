@@ -121,12 +121,12 @@ describe("Pact Verification", () => {
         ),
       ],
 
-      // pactBrokerUrl: process.env.PACT_BROKER_BASE_URL,
-      // pactBrokerToken: process.env.PACT_BROKER_TOKEN,
-      // publishVerificationResult: true,
-      // providerVersion: process.env.MY_CI_COMMIT,
-      // providerVersionBranch: "main",
-      // providerVersionTags: [process.env.MY_CI_BRANCH],
+      pactBrokerUrl: process.env.PACT_BROKER_BASE_URL,
+      pactBrokerToken: process.env.PACT_BROKER_TOKEN,
+      publishVerificationResult: true,
+      providerVersion: process.env.MY_CI_COMMIT,
+      providerVersionBranch: "main",
+      providerVersionTags: [process.env.MY_CI_BRANCH],
 
       stateHandlers: {
         "Users exist": usersExistState,
