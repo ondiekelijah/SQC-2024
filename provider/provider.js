@@ -4,10 +4,6 @@ const Controller = require("./controllers/controllers");
 
 const app = express();
 const cors = require("cors");
-const dotenv = require('dotenv');
-let dontenv = dotenv.config({ path: './.env' });
-console.log(dontenv);
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
